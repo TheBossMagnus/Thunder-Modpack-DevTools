@@ -1,11 +1,17 @@
-Set-Location "C:\Users\tbmag\GitHub\Quilt-Optimized\src\1.18.2"
-packwiz.exe update --all
-Set-Location "C:\Users\tbmag\GitHub\Quilt-Optimized\src\1.19.2"
-packwiz.exe update --all
-Set-Location "C:\Users\tbmag\GitHub\Quilt-Optimized\src\1.19.3"
-packwiz.exe update --all
-Set-Location "C:\Users\tbmag\GitHub\Quilt-Optimized\src\1.19.4"
-packwiz.exe update --all
+#contains the list of all the supported editions
+$editions = @(
+    #"fabric/1.16.5""fabric/1.17.2""fabric/1.18.2", "fabric/1.19.2", "fabric/1.19.3", "fabric/1.19.4"
+    "quilt/1.18.2", "quilt/1.19.2", "quilt/1.19.3", "quilt/1.19.4"
+    )
+
+
+Set-Location "C:\Users\tbmag\GitHub\Quilt-Optimized\src"    #go to global src folder
+foreach ($edition in $editions) {
+    Set-Location -path $edition     #go to a specific edition folder
+    packwiz.exe update --all    #update all mods with packwiz
+    Write-Host "`n"
+    Set-Location "..\.."    #go back to global src folder
+}
 
 Write-Host "`n All done!" -ForegroundColor Green -BackgroundColor White
 Pause

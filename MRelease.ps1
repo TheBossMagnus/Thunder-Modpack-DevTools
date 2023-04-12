@@ -59,4 +59,6 @@ $date = "> " + (Get-Date -Format "dd/MM/yyyy")  #add date to current changelog
 Set-Content "C:\Users\tbmag\GitHub\Quilt-Optimized\Changelog.md" -Value ($verchangelog + $date + "---" + $globalchangelog)  #add current changelog to global changelog
 
 Write-Host "`n`n`n Changelog done! `n`n`n" -ForegroundColor Green
+
+
 Pause

@@ -5,7 +5,7 @@ $editions = @(
     )
 
 
-Set-Location "C:\Users\tbmag\GitHub\Quilt-Optimized\src"    #go to global src folder
+Set-Location "C:\Users\User\GitHub\Quilt-Optimized\src"    #go to global src folder
 foreach ($edition in $editions) {
     Set-Location -path $edition     #go to a specific edition folder
     packwiz.exe update --all    #update all mods with packwiz

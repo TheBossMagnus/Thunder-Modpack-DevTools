@@ -1,4 +1,4 @@
-$version = (Get-ChildItem -Path "C:\Users\User\GitHub\Quilt-Optimized\bin" -Directory | Sort-Object LastWriteTime)[-1].Name   #getv latest version
+$version = (Get-ChildItem -Path "C:\Users\User\GitHub\Quilt-Optimized\bin" -Directory | Sort-Object LastWriteTime)[-1].Name   #get latest version
 
 #contains the list of all the supported editions
 $editions = @(

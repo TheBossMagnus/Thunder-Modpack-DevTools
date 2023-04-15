@@ -60,5 +60,6 @@ Set-Content "C:\Users\User\GitHub\Quilt-Optimized\Changelog.md" -Value ($verchan
 
 Write-Host "`n`n`n Changelog done! `n`n`n" -ForegroundColor Green
 
-
 Pause
+
+code "C:\Users\User\GitHub\Quilt-Optimized\changelog.md"

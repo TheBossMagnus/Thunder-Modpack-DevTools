@@ -62,4 +62,4 @@ Write-Host "`n`n`n Changelog done! `n`n`n" -ForegroundColor Green
 
 Pause
 
-code "C:\Users\User\GitHub\Quilt-Optimized\changelog.md"
+code "C:\Users\User\GitHub\Quilt-Optimized\Changelog.md"

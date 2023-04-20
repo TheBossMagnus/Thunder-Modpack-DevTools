@@ -1,19 +1,12 @@
 $version = (Get-ChildItem -Path "C:\Users\User\GitHub\Quilt-Optimized\bin" -Directory | Sort-Object LastWriteTime)[-1].Name   #get latest version
 
-#contains the list of all the supported editions
-$editions = @(
-    #"fabric/1.16.5""fabric/1.17.2""fabric/1.18.2", "fabric/1.19.2", "fabric/1.19.3", "fabric/1.19.4"
-    "quilt/1.18.2", "quilt/1.19.2", "quilt/1.19.3", "quilt/1.19.4"
-    )
+#Create a draft realase on github
+gh release create $version -R TheBossMagnus/Quilt-Optimized -t $version -d
 
-gh release create $version
-
-foreach ($edition in $editions) {
-
-
-    $loader =  $edition.split("/")[0]   #get modloader
-    $MCversion =  $edition.split("/")[1]    #get MC version
-
-    gh release upload $version "C:\Users\User\GitHub\Quilt-Optimized\bin\$version\$loader\Quilt Optimized-$version for $loader $MCversion.mrpack"
+#iterate through all the mrpack files in the latest version folder and upload them to the release
+Get-ChildItem -Path "C:\Users\User\GitHub\Quilt-Optimized\bin\$version" -Filter "*.mrpack" -Recurse | ForEach-Object {
+    gh release upload $version $_.FullName
 }
+
+Write-Host "`n`n All done!" -ForegroundColor Green
 Pause

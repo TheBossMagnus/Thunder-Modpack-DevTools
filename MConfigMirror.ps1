@@ -9,4 +9,3 @@ foreach ($destinationFolder in $destinationFolders) {
 }
 
 Write-Host "Mirroring complete!" -f Green
-Pause

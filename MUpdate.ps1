@@ -14,4 +14,3 @@ foreach ($edition in $editions) {
 }
 
 Write-Host "`n All done!" -ForegroundColor Green -BackgroundColor White
-Pause

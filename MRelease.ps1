@@ -2,7 +2,7 @@
 $release = Read-Host "release number"
 
 # Get second latest version
-$olderVersion = (Get-ChildItem -Path "C:\Users\User\GitHub\Thunder\bin" -Directory | Sort-Object LastWriteTime).Name
+$olderVersion = (Get-ChildItem -Path "C:\Users\User\GitHub\Thunder\bin" -Directory | Sort-Object LastWriteTime)[-1].Name
 
 # Create folder for .mrpack for each modloader and one for changelogs
 New-Item -Path "C:\Users\User\GitHub\Thunder\bin\$release" -Name "quilt" -ItemType "directory" | Out-Null
@@ -38,13 +38,10 @@ Move-Item -Path "Thunder-$release.mrpack" -destination "C:\Users\User\GitHub\Thu
 # Go back to global src folder
 Set-Location "..\.."
 
-Write-Host "`nThunder-$release for $loader $MCversion done" -ForegroundColor Green
 
 # Generate .mrpack's path of the current and older version
 $currentPack = "C:\Users\User\GitHub\Thunder\bin\$release\$loader\Thunder-$release for $loader $MCversion.mrpack"
 $oldPack = "C:\Users\User\GitHub\Thunder\bin\$olderVersion\$loader\Thunder-$olderVersion for $loader $MCversion.mrpack"
-write-host $currentPack
-write-host $oldPack
 
 # Create blank changelog file
 New-Item -Path "C:\Users\User\GitHub\Thunder\bin\$release\changelog" -Name "$Loader $MCversion Changelog.md" -ItemType "file" | Out-Null
@@ -57,6 +54,7 @@ New-Item -Path "C:\Users\User\GitHub\Thunder\bin\$release\changelog" -Name "$Loa
         Set-Content "C:\Users\User\GitHub\Thunder\bin\$release\changelog\$Loader $MCversion Changelog.md" -Value "No changelog available"
         Write-Warning "No changelog was available"
     }
+Write-Host "`nThunder-$release for $loader $MCversion done" -ForegroundColor Green
 }
 
 # Add to global changelog

@@ -58,7 +58,7 @@ Write-Host "`nThunder-$release for $loader $MCversion done" -ForegroundColor Gre
 }
 
 # Add to global changelog
-$newchangelog = get-content "C:\Users\User\GitHub\Thunder\bin\$release\Changelog\Fabric 1.19.4 changelog.md"    # Get content current changelog
+$newchangelog = get-content "C:\Users\User\GitHub\Thunder\bin\$release\Changelog\Fabric 1.20.1 changelog.md"    # Get content current changelog
 $globalchangelog = get-content "C:\Users\User\GitHub\Thunder\Changelog.md"   # Get content of the global changelog(Changelog.md)
 $date = "> " + (Get-Date -Format "dd/MM/yyyy")  # Add date to current changelog
 Set-Content "C:\Users\User\GitHub\Thunder\Changelog.md" -Value ($newchangelog + $date + "`n---`n" + $globalchangelog)  # Add current changelog to global changelog

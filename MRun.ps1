@@ -11,12 +11,12 @@ $rootFolder = "C:\Users\user\GitHub\Thunder\src"
 $subfolders = $editions | ForEach-Object { Join-Path $rootFolder $_ }
 
 # Print the available subfolders to the console
-Write-Host "Available subfolders:"
+Write-Host "Available subfolders"
 $counter = 1
 $editions | ForEach-Object { Write-Host "$counter. $_"; $counter++ }
 
 # Prompt the user to select subfolders to run the command in
-$selectedSubfolders = Read-Host "Enter the subfolder numbers separated by commas (or 'a' for all subfolders):"
+$selectedSubfolders = Read-Host "Enter the subfolder numbers separated by commas (or 'a' for all subfolders)"
 $selectedSubfolderNumbers = $selectedSubfolders.Split(",")
 
 # Prompt the user to enter the command to run

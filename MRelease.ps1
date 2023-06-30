@@ -63,4 +63,4 @@ $globalchangelog = get-content "C:\Users\User\GitHub\Thunder\Changelog.md"   # G
 $date = "> " + (Get-Date -Format "dd/MM/yyyy")  # Add date to current changelog
 Set-Content "C:\Users\User\GitHub\Thunder\Changelog.md" -Value ($newchangelog + $date + "`n---`n" + $globalchangelog)  # Add current changelog to global changelog
 
-Write-Host "`n`n`nDone!" -ForegroundColor Green
+Write-Host "`n`nAll Done!" -ForegroundColor Green

@@ -13,4 +13,4 @@ foreach ($edition in $editions) {
     Set-Location "..\.."    #go back to global src folder
 }
 
-Write-Host "`n All done!" -ForegroundColor Green
+Write-Host "All done!" -ForegroundColor Green

@@ -1,14 +1,12 @@
-# Define the subfolders to search for
-$editions = @(
-    "fabric/1.16.5", "fabric/1.17.1", "fabric/1.18.2", "fabric/1.19.2", "fabric/1.19.3", "fabric/1.19.4", "fabric/1.20.1",
-    "quilt/1.18.2", "quilt/1.19.2", "quilt/1.19.3", "quilt/1.19.4", "quilt/1.20.1"
-)
+$root = $args[5]
+$editions = $args[7..($args.Length - 1)]
+
 
 # Define the root folder to search in
-$rootFolder = "C:\Users\user\GitHub\Thunder\src"
+$root = "C:\Users\user\GitHub\Thunder\src"
 
 # Generate the list of subfolders to search in
-$subfolders = $editions | ForEach-Object { Join-Path $rootFolder $_ }
+$subfolders = $editions | ForEach-Object { Join-Path $root $_ }
 
 # Print the available subfolders to the console
 Write-Host "Available subfolders"

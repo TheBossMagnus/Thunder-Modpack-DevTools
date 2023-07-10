@@ -1,13 +1,16 @@
+# Get the root folder and editions from the command line arguments
 $root = $args[5]
 $editions = $args[7..($args.Length - 1)]
 
-write-host $root
-write-host $editions
-
+# Iterate through all the editions and update all mods with packwiz
 foreach ($edition in $editions) {
-    Set-Location -path "$root\src\$edition"     #go to a specific edition folder
-    packwiz.exe update --all    #update all mods with packwiz
-    Write-Host "`n"  #go back to global src folder
+    # Go to the specific edition folder
+    Set-Location -Path "$root\src\$edition"
+
+    # Update all mods with packwiz
+    packwiz.exe update --all | Out-Null
+
+    Write-Host "`n$edition done" -ForegroundColor Green
 }
 
-Write-Host "All done!" -ForegroundColor Green
+Write-Host "`nAll done!" -ForegroundColor Green

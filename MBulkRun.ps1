@@ -1,6 +1,6 @@
+# Get the root folder and editions from the command line arguments
 $root = $args[5]
 $editions = $args[7..($args.Length - 1)]
-
 
 # Define the root folder to search in
 $root = "C:\Users\user\GitHub\Thunder\src"
@@ -32,6 +32,7 @@ if ($selectedSubfolders -eq "a") {
 # Otherwise, run the command in the selected subfolders
 else {
     foreach ($number in $selectedSubfolderNumbers) {
+        # Get the path of the selected subfolder
         $subfolderPath = $subfolders[$number.Trim() - 1]
         Write-Host "Running command in $($subfolderPath)..."
         Set-Location $subfolderPath

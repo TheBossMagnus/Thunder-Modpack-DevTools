@@ -1,13 +1,15 @@
+# Get the modpack name, developer name, and root folder from the command line arguments
 $modpackName = $args[1]
 $devName = $args[3]
 $root = $args[5]
 
-$version = (Get-ChildItem -Path "$root\bin" -Directory | Sort-Object LastWriteTime)[-1].Name   #get latest version
+# Get the latest version from the bin folder
+$version = (Get-ChildItem -Path "$root\bin" -Directory | Sort-Object LastWriteTime)[-1].Name
 
-#Create a draft realase on github
+# Create a release on GitHub
 gh release create $version -R $devName/$modpackName -t $version -d -n ""
 
-#iterate through all the mrpack files in the latest version folder and upload them to the release
+# Iterate through all the mrpack files in the latest version folder and upload them to the release
 Get-ChildItem -Path "$root\bin\$version" -Include "*.mrpack", "*.md" -Recurse | ForEach-Object {
     gh release upload $version $_.FullName
 }

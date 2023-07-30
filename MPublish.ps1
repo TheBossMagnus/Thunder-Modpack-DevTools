@@ -6,6 +6,12 @@ $root = $args[5]
 # Get the latest version from the bin folder
 $version = (Get-ChildItem -Path "$root\bin" -Directory | Sort-Object LastWriteTime)[-1].Name
 
+#Git commit on GH
+Set-Location $root
+git add .
+git commit -S -m $version
+git push
+
 # Create a release on GitHub
 gh release create $version -R $devName/$modpackName -t $version -d -n ""
 

@@ -8,7 +8,7 @@ foreach ($edition in $editions) {
     Set-Location -Path "$root\src\$edition"
 
     # Update all mods with packwiz
-    packwiz.exe update --all
+    packwiz.exe update --all -y
 
     Write-Host "$edition done`n" -ForegroundColor Green
 }

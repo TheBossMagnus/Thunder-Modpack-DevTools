@@ -7,8 +7,8 @@ $command = Read-Host "Enter the command to run in all selected subfolders:"
 
 
 foreach ($edition in $editions) {
-        # Get the path of the selected subfolder
-        Write-Host "Running command in $($edition)..."
-        Set-Location "$root\src\$edition"
-        Invoke-Expression $command
-    }
+	# Get the path of the selected subfolder
+	Write-Host "Running command in $($edition)..."
+	Set-Location "$root\src\$edition"
+	Invoke-Expression $command
+}

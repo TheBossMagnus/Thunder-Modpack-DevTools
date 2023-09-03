@@ -30,40 +30,40 @@ New-Item -Path $binPath -Name "changelog" -ItemType "directory" | Out-Null
 
 # Iterate through all the editions and generate .mrpack files and changelogs
 foreach ($edition in $editions) {
-    # Go to the specific edition folder
-    Set-Location -Path "$root\src\$edition"
+	# Go to the specific edition folder
+	Set-Location -Path "$root\src\$edition"
 
-    # Get the modloader and Minecraft version
-    $loader, $MCversion = $edition.Split('/')
+	# Get the modloader and Minecraft version
+	$loader,$MCversion = $edition.Split('/')
 
-    # Update pack.toml
-    packwiz init -r --name $modpackName --author $devName --modloader $loader --$loader-latest --version $release --mc-version $MCversion | Out-Null
+	# Update pack.toml
+	packwiz init -R --name $modpackName --author $devName --modloader $loader --$loader-latest --version $release --mc-version $MCversion | Out-Null
 
-    # Export .mrpack
-    packwiz mr export | Out-Null
+	# Export .mrpack
+	packwiz mr export | Out-Null
 
-    # Rename .mrpack and move it to the bin folder
-    $newName = "$modpackName-$release for $loader $MCversion.mrpack"
-    Move-Item -Path "$modpackName-$release.mrpack" -Destination "$binPath\$loader\$newName" | Out-Null
+	# Rename .mrpack and move it to the bin folder
+	$newName = "$modpackName-$release for $loader $MCversion.mrpack"
+	Move-Item -Path "$modpackName-$release.mrpack" -Destination "$binPath\$loader\$newName" | Out-Null
 
-    # Generate the paths of the current and older .mrpack files
-    $currentPack = "$root\bin\$release\$loader\$newName"
-    $oldPack = "$root\bin\$olderVersion\$loader\$modpackName-$olderVersion for $loader $MCversion.mrpack"
+	# Generate the paths of the current and older .mrpack files
+	$currentPack = "$root\bin\$release\$loader\$newName"
+	$oldPack = "$root\bin\$olderVersion\$loader\$modpackName-$olderVersion for $loader $MCversion.mrpack"
 
-    # Create a blank changelog file
-    New-Item -Path "$root\bin\$release\changelog" -Name "$loader $MCversion Changelog.md" -ItemType "file" | Out-Null
+	# Create a blank changelog file
+	New-Item -Path "$root\bin\$release\changelog" -Name "$loader $MCversion Changelog.md" -ItemType "file" | Out-Null
 
-    if ((Test-Path -Path $oldPack) -and (Test-Path -Path $currentPack)) {
-        # Generate the changelog
-        java -jar "C:\Users\User\GitHub\Modpack DevTools\ModListCreator.jar" changelog -old $oldPack -new $currentPack -out "$root\bin\$release\changelog\$loader $MCversion Changelog.md"
-    }
-    else {
-        # If the .mrpack file doesn't exist, write "No changelog available" and print a warning
-        Set-Content "$root\bin\$release\changelog\$loader $MCversion Changelog.md" -Value "No changelog available"
-        Write-Warning "No changelog was available"
-    }
+	if ((Test-Path -Path $oldPack) -and (Test-Path -Path $currentPack)) {
+		# Generate the changelog
+		java -jar "C:\Users\User\GitHub\Modpack DevTools\ModListCreator.jar" changelog -old $oldPack -new $currentPack -out "$root\bin\$release\changelog\$loader $MCversion Changelog.md"
+	}
+	else {
+		# If the .mrpack file doesn't exist, write "No changelog available" and print a warning
+		Set-Content "$root\bin\$release\changelog\$loader $MCversion Changelog.md" -Value "No changelog available"
+		Write-Warning "No changelog was available"
+	}
 
-    Write-Host "`n$modpackName-$release for $loader $MCversion done" -ForegroundColor Green
+	Write-Host "`n$modpackName-$release for $loader $MCversion done" -ForegroundColor Green
 }
 
 Write-Host "`n`nAll done!" -ForegroundColor Green

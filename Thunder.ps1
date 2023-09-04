@@ -3,19 +3,16 @@ $modpackName = "Thunder"
 $devName = "TheBossMagnus"
 $root = "C:\Users\User\GitHub\Thunder"
 $editions = @(
-	"fabric/1.16.5",
-	"fabric/1.17.1",
-	"quilt/1.18.2",
-	"fabric/1.18.2",
-	"quilt/1.19.2",
-	"fabric/1.19.2",
-	"quilt/1.19.3",
-	"fabric/1.19.3",
-	"quilt/1.19.4",
-	"fabric/1.19.4",
-	"quilt/1.20.1",
-	"fabric/1.20.1",
-	"fabric/1.20.2"
+	"1.16.5\fabric",
+	"1.18.2\quilt",
+	"1.18.2\fabric",
+	"1.19.2\quilt",
+	"1.19.2\fabric",
+	"1.19.4\quilt",
+	"1.19.4\fabric",
+	"1.20.1\quilt",
+	"1.20.1\fabric",
+	"1.20.2\fabric"
 )
 
 
@@ -25,7 +22,7 @@ $Target = $args[1]
 
 # If a target edition was specified, filter the editions array to only include the target edition
 if ($Target -ne "") {
-	$editions = $editions | Where-Object { $_ -like "*$target" }
+	$editions = $editions | Where-Object { $_ -like "$Target*" }
 }
 
 # Define arguments to pass to sub-scripts

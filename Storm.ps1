@@ -3,14 +3,20 @@ $modpackName = "Storm"
 $devName = "TheBossMagnus"
 $root = "C:\Users\User\GitHub\Storm"
 $editions = @(
-	"fabric/1.20.1"
+	"1.20.1\fabric"
 )
+
+# Get the name of the sub-script to run from the command line arguments and the target edition
+$script = $args[0]
+$Target = $args[1]
+
+# If a target edition was specified, filter the editions array to only include the target edition
+if ($Target -ne "") {
+	$editions = $editions | Where-Object { $_ -like "$Target*" }
+}
 
 # Define arguments to pass to sub-scripts
 $arguments = @("-modpackName $modpackName -devName $devName -root $root -editions $editions")
-
-# Get the name of the sub-script to run from the command line arguments
-$script = $args[0]
 
 # Call the appropriate sub-script based on the command line argument
 if ($script -eq "Update" -or $script -eq "u") {
@@ -25,12 +31,10 @@ if ($script -eq "Update" -or $script -eq "u") {
 } elseif ($script -eq "Release" -or $script -eq "r") {
 	Invoke-Expression "& `"MRelease.ps1`" $arguments"
 
-} elseif ($script -eq "Mirror-Config" -or $script -eq "mc") {
-	Invoke-Expression "& `"MMirrorConfig.ps1`" $arguments"
-
 } elseif ($script -eq "Help" -or $script -eq "h" -or $script -eq "?") {
 	Invoke-Expression "& `"Help.ps1`" $arguments"
 
 } else {
 	Write-Warning "Invalid argument"
 }
+

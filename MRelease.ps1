@@ -17,14 +17,14 @@ foreach ($edition in $editions) {
 	$MCversion, $loader = $edition.Split('\')
 
 	# Update pack.toml
-	packwiz init -r --name $modpackName --author $devName --modloader $loader --$loader-latest --version $release --mc-version $MCversion | Out-Null
+	packwiz init -r --name $modpackName --author $devName --modloader $loader --$loader-latest --version "$release+$loader-$mcversion" --mc-version $MCversion | Out-Null
 
 	# Export .mrpack
 	packwiz mr export | Out-Null
 
 	# Rename .mrpack and move it to the bin folder
 	mkdir "$root\bin\$MCversion\$release" -ErrorAction Ignore | Out-Null
-	Move-Item -Path "$root\src\$MCversion\$loader\$modpackName-$release.mrpack" -Destination "$root\bin\$MCversion\$release\$modpackName-$release+$loader-$mcversion.mrpack" | Out-Null
+	Move-Item -Path "$root\src\$MCversion\$loader\$modpackName-$release+$loader-$mcversion.mrpack" -Destination "$root\bin\$MCversion\$release\$modpackName-$release+$loader-$mcversion.mrpack" | Out-Null
 
 	# Get the second latest version from the bin folder
 	$olderVersion = (Get-ChildItem -Path "$root\bin\$MCversion" -Directory | Sort-Object LastWriteTime)[-2].Name

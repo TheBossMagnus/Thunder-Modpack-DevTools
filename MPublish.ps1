@@ -8,12 +8,11 @@ $MCversion, $loader = $editions[0].Split('\')
 
 $version = (Get-ChildItem -Path "$root\bin\$MCversion" -Directory | Sort-Object LastWriteTime)[-1].Name
 
-
 #Git commit on GH
 Set-Location $root
-#git add .
-#git commit -S -m "$version+$mcversion"
-#git push
+git add $root\src\$MCversion
+git commit -S -m "$version+$mcversion"
+git push
 
 # Create a release on GitHub
 gh release create "$version+$mcversion" -R $devName/$modpackName -t "Thunder $version for $mcversion" -d -n ""

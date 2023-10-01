@@ -4,8 +4,11 @@ $devName = $args[3]
 $root = $args[5]
 $editions = $args[7..($args.Length - 1)]
 
+
+$MCversion = $editions[0].Split('\')[0]
+$olderVersion = (Get-ChildItem -Path "$root\bin\$MCversion" -Directory | Sort-Object LastWriteTime)[-1].Name
 # Prompt the user to enter the release number
-$release = Read-Host "Enter the release number"
+$release = Read-Host "Enter the release number (latest release: $olderVersion)"
 
 
 # Iterate through all the editions and generate .mrpack files and changelogs
@@ -25,9 +28,6 @@ foreach ($edition in $editions) {
 	# Rename .mrpack and move it to the bin folder
 	mkdir "$root\bin\$MCversion\$release" -ErrorAction Ignore | Out-Null
 	Move-Item -Path "$root\src\$MCversion\$loader\$modpackName-$release+$loader-$mcversion.mrpack" -Destination "$root\bin\$MCversion\$release\$modpackName-$release+$loader-$mcversion.mrpack" | Out-Null
-
-	# Get the second latest version from the bin folder
-	$olderVersion = (Get-ChildItem -Path "$root\bin\$MCversion" -Directory | Sort-Object LastWriteTime)[-2].Name
 
 	# Generate the paths of the current and older .mrpack files
 	$currentPack = "$root\bin\$MCversion\$release\$modpackName-$release+$loader-$mcversion.mrpack"

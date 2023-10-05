@@ -3,7 +3,8 @@ $modpackName = "Storm"
 $devName = "TheBossMagnus"
 $root = "C:\Users\User\GitHub\Storm"
 $editions = @(
-	"1.20.1\fabric"
+	"1.20.1\fabric",
+	"1.20.2\fabric"
 )
 
 # Get the name of the sub-script to run from the command line arguments and the target edition

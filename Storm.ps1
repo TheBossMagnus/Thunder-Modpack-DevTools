@@ -1,7 +1,7 @@
 # Define modpack name, developer name, root directory, and editions array
 $modpackName = "Storm"
 $devName = "TheBossMagnus"
-$root = "C:\Users\User\GitHub\Storm"
+$root = "D:\Storm"
 $editions = @(
 	"1.20.1\fabric",
 	"1.20.2\fabric"

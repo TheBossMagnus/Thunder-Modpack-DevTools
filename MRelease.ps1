@@ -35,7 +35,7 @@ foreach ($edition in $editions) {
 
 	if ((Test-Path -Path $oldPack) -and (Test-Path -Path $currentPack)) {
 		# Generate the changelog
-		java -jar "C:\Users\User\GitHub\Modpack DevTools\ModListCreator.jar" changelog -old $oldPack -new $currentPack -out "$root\bin\$MCversion\$release\Changelog-$release+$loader-$MCversion.md"
+		java -jar "D:\Modpack DevTools\ModListCreator.jar" changelog -old $oldPack -new $currentPack -out "$root\bin\$MCversion\$release\Changelog-$release+$loader-$MCversion.md"
 	}
 	else {
 		# If the .mrpack file doesn't exist, write "No changelog available" and print a warning

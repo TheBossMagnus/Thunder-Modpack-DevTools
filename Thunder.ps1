@@ -1,7 +1,7 @@
 # Define modpack name, developer name, root directory, and editions array
 $modpackName = "Thunder"
 $devName = "TheBossMagnus"
-$root = "C:\Users\User\GitHub\Thunder"
+$root = "D:\Thunder"
 $editions = @(
 	"1.16.5\fabric",
 	"1.18.2\quilt",

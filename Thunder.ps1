@@ -12,7 +12,8 @@ $editions = @(
 	"1.19.4\fabric",
 	"1.20.1\quilt",
 	"1.20.1\fabric",
-	"1.20.2\fabric"
+	"1.20.2\fabric",
+	"1.20.3\fabric"
 )
 
 

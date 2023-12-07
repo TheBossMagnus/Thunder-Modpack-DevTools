@@ -27,7 +27,7 @@ foreach ($edition in $editions) {
 
 	# Rename .mrpack and move it to the bin folder
 	mkdir "$root\bin\$MCversion\$release" -ErrorAction Ignore | Out-Null
-	Move-Item -Path "$root\src\$MCversion\$loader\$modpackName-$release+$loader-$mcversion.mrpack" -Destination "$root\bin\$MCversion\$release\$modpackName-$release+$loader-$mcversion.mrpack" | Out-Null
+	Move-Item -Path "$root\src\$MCversion\$loader\$modpackName-$release+$loader-$mcversion.mrpack" -Destination "$root\bin\$MCversion\$release\$modpackName-$release+$loader-$mcversion.mrpack" -Force | Out-Null
 
 	# Generate the paths of the current and older .mrpack files
 	$currentPack = "$root\bin\$MCversion\$release\$modpackName-$release+$loader-$mcversion.mrpack"

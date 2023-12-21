@@ -39,12 +39,15 @@ if ($script -eq "Update" -or $script -eq "u") {
 } elseif ($script -eq "Bulk-Run" -or $script -eq "br") {
 	Invoke-Expression "& `"MBulkRun.ps1`" $arguments"
 
-} elseif ($script -eq "Release" -or $script -eq "r") {
-	Invoke-Expression "& `"MRelease.ps1`" $arguments"
+} elseif ($script -eq "build" -or $script -eq "b") {
+	Invoke-Expression "& `"MBuild.ps1`" $arguments"
 
 } elseif ($script -eq "Help" -or $script -eq "h" -or $script -eq "?") {
 	Invoke-Expression "& `"Help.ps1`" $arguments"
-
+} elseif ($script -eq "realease" -or $script -eq "r") {
+	Invoke-Expression "& `"MUpdate.ps1`" $arguments"
+	Invoke-Expression "& `"MBuild.ps1`" $arguments"
+	Invoke-Expression "& `"MPublish.ps1`" $arguments"
 } else {
 	Write-Warning "Invalid argument"
 }

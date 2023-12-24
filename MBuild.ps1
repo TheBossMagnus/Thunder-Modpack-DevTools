@@ -35,7 +35,7 @@ foreach ($edition in $editions) {
 
 	if ((Test-Path -Path $oldPack) -and (Test-Path -Path $currentPack)) {
 		# Generate the changelog
-		MrpackChangelogger.exe --old $oldPack --new $currentPack --file "$root\bin\$MCversion\$release\Changelog-$release+$loader-$MCversion.md" --config "$root\config.json"}
+		ModpackChangelogger.exe --old $oldPack --new $currentPack --file "$root\bin\$MCversion\$release\Changelog-$release+$loader-$MCversion.md" --config "$root\config.json"}
 	else {
 		# If the .mrpack file doesn't exist, write "No changelog available" and print a warning
 		Set-Content "$root\bin\$MCversion\$release\Changelog-$release+$loader-$MCversion.md" -Value "No changelog available"

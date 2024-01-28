@@ -15,7 +15,7 @@ git commit -S -m "$version+$mcversion"
 git push
 
 # Create a release on GitHub
-gh release create "$version+$mcversion" -R $devName/$modpackName -t "Thunder $version for $mcversion" -d -n ""
+gh release create "$version+$mcversion" -R $devName/$modpackName -t "Thunder $version for $mcversion" -d --notes "GitHub releases are not recommended for use. Please download the modpack from the Modrinth page instead."
 
 # Iterate through all the mrpack files in the latest version folder and upload them to the release
 Get-ChildItem -Path "$root\bin\$mcversion\$version" -Include "*.mrpack","*.md" -Recurse | ForEach-Object {

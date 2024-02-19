@@ -6,7 +6,7 @@ $editions = $args[7..($args.Length - 1)]
 
 
 $MCversion = $editions[0].Split('\')[0]
-$olderVersion = (Get-ChildItem -Path "$root\bin\$MCversion" -Directory | Sort-Object LastWriteTime)[-1].Name
+$olderVersion = (Get-ChildItem -Path "$root\bin\$MCversion" -Directory | Sort-Object CreationTime)[-1].Name
 # Prompt the user to enter the release number
 $release = Read-Host "Enter the release number (latest release: $olderVersion)"
 

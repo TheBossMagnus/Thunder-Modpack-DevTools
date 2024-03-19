@@ -20,7 +20,12 @@ foreach ($edition in $editions) {
 	$MCversion, $loader = $edition.Split('\')
 
 	# Update pack.toml
-	packwiz init -r --name $modpackName --author $devName --modloader $loader --$loader-latest --version "$release+$loader-$mcversion" --mc-version $MCversion | Out-Null
+	if ($MCversion -eq "1.20.5"){
+		$tmp = Read-Host "Snapshot version"
+		packwiz init -r --name $modpackName --author $devName --modloader $loader --$loader-latest --version "$release+$loader-$mcversion" --mc-version $tmp | Out-Null
+	}else{
+		packwiz init -r --name $modpackName --author $devName --modloader $loader --$loader-latest --version "$release+$loader-$mcversion" --mc-version $MCversion | Out-Null
+	}
 
 	# Export .mrpack
 	packwiz mr export | Out-Null

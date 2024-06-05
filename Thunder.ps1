@@ -4,19 +4,13 @@ $devName = "TheBossMagnus"
 $root = "D:\Thunder"
 $editions = @(
 	"1.16.5\fabric",
-	"1.18.2\quilt",
 	"1.18.2\fabric",
 	"1.19.2\quilt",
 	"1.19.2\fabric",
-	"1.19.4\quilt",
-	"1.19.4\fabric",
 	"1.20.1\quilt",
 	"1.20.1\fabric",
-	"1.20.2\fabric",
-	"1.20.2\quilt",
 	"1.20.4\fabric",
 	"1.20.4\quilt",
-	"1.20.5\fabric",
 	"1.20.6\fabric",
 	"1.21\fabric"
 )

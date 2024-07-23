@@ -34,6 +34,9 @@ $arguments = @("-modpackName $modpackName -devName $devName -root $root -edition
 if ($script -eq "Update" -or $script -eq "u") {
 	Invoke-Expression "& `"MUpdate.ps1`" $arguments"
 
+} elseif ($script -eq "Update-List" -or $script -eq "ul") {
+	Invoke-Expression "& `"MUpdateList.ps1`" $arguments"
+
 } elseif ($script -eq "Publish" -or $script -eq "p") {
 	Invoke-Expression "& `"MPublish.ps1`" $arguments"
 

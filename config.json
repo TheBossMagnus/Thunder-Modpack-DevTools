@@ -1,0 +1,22 @@
+{
+    "check": {
+        "added_mods": true,
+        "removed_mods": true,
+        "updated_mods": true,
+        "loader": true,
+        "mc_version": false,
+        "config": true,
+        "identified_overrides_mods": true,
+        "unidentified_overrides_mods": true
+    },
+    "format": {
+        "style": "comma",
+        "header": {
+            "show_header": true,
+            "size": 2,
+            "title": "Thunder",
+            "show_old_version_number": true,
+            "show_new_version_number": true
+        }
+    }
+}

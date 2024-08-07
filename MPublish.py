@@ -1,7 +1,8 @@
 import os
 import subprocess
 
-def publish(root, editions, dev_name, modpack_name):
+
+def publish(root, editions, dev_name, modpack_name) -> None:
     mc_version = editions[0].split("\\")[0]
     version = (os.listdir(f"{root}/bin/{mc_version}"))[-1]
 
@@ -11,7 +12,7 @@ def publish(root, editions, dev_name, modpack_name):
     os.system("git push")
 
 
-    subprocess.run(["gh", "release","create", f"{version}+{mc_version}", "-R", f"{dev_name}/{modpack_name}", "-d","-t",f"Thunder {version} for {mc_version}","--notes","GitHub releases are not recommended for use. Please download the modpack from the Modrinth page instead." ])
+    subprocess.run(["gh", "release","create", f"{version}+{mc_version}", "-R", f"{dev_name}/{modpack_name}", "-d","-t",f"Thunder {version} for {mc_version}","--notes","GitHub releases are not recommended for use. Please download the modpack from the Modrinth page instead." ], check=False)
 
     files_to_upload = [
         f"{root}/bin/{mc_version}/{version}/{file}"

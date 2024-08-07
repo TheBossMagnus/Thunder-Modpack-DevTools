@@ -1,6 +1,7 @@
 import sys
-from MBulkRun import bulk_run
+
 from MBuild import build_modpack
+from MBulkRun import bulk_run
 from MPublish import publish
 from MUpdate import update
 from MUpdateList import update_list
@@ -20,37 +21,35 @@ editions = [
     r"1.20.6\quilt",
     r"1.20.6\fabric",
     r"1.21\quilt",
-    r"1.21\fabric"
+    r"1.21\fabric",
 ]
 
-def main():
+def main() -> None:
     try:
         global editions, root, modpack_name, modpack_author
         tool = sys.argv[1]
 
-        if len(sys.argv) < 3:
-            print("No edition specified")
+        if sys.argv[2]:
             return
 
         targets = sys.argv[2:]
         editions = [edition for edition in editions if any(target in edition for target in targets)]
 
-        if tool == "u" or tool == "update":
+        if tool in ("u", "update"):
             update(root, editions)
-        elif tool == "ul" or tool == "updatelist":
+        elif tool in ("ub", "updatebulk"):
             update_list(root, editions)
-        elif tool == "br" or tool == "bulkrun":
+        elif tool in ("br", "bulkrun"):
             bulk_run(root, editions)
-        elif tool == "b" or tool == "build":
+        elif tool in ("b", "build"):
             build_modpack(modpack_name, modpack_author, root, editions)
-        elif tool == "p" or tool == "publish":
+        elif tool in ("p", "publish"):
             publish(root, editions, modpack_author, modpack_name)
-        elif tool == "r" or tool == "release":
+        elif tool in ("r", "release"):
             update(root, editions)
             build_modpack(modpack_name, modpack_author, root, editions)
             publish(root, editions, modpack_author, modpack_name)
         else:
-            print("Invalid tool")
             return
     except KeyboardInterrupt:
         print("\nOperation cancelled by user.")

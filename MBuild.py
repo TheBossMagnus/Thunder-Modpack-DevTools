@@ -1,9 +1,10 @@
 import os
 import subprocess
 
-def build_modpack(modpack_name, dev_name, root, editions):
-    MC_version = editions[0].split("\\")[0]
-    older_version = (os.listdir(os.path.join(root, "bin", MC_version)))[-1]
+
+def build_modpack(modpack_name, dev_name, root, editions) -> None:
+    mc_version = editions[0].split("\\")[0]
+    older_version = (os.listdir(os.path.join(root, "bin", mc_version)))[-1]
 
     release = input(f"Enter the release number (latest release {older_version}): ")
 
@@ -12,29 +13,29 @@ def build_modpack(modpack_name, dev_name, root, editions):
 
         # Get the modloader and Minecraft version
         _, loader = edition.split("\\")
-        os.makedirs(os.path.join(root, "bin", MC_version, release), exist_ok=True)
+        os.makedirs(os.path.join(root, "bin", mc_version, release), exist_ok=True)
 
-        if MC_version == "1.21.1":
+        if mc_version == "1.21.1":
             tmp = input("Snapshot version")
-            subprocess.run(["packwiz","init","-r","--name",modpack_name,"--author",dev_name,"--modloader",loader,f"--{loader}-latest",f"--version={release}+{loader}-{MC_version}",f"--mc-version={tmp}"],shell=True)
+            subprocess.run(["packwiz","init","-r","--name",modpack_name,"--author",dev_name,"--modloader",loader,f"--{loader}-latest",f"--version={release}+{loader}-{mc_version}",f"--mc-version={tmp}"],shell=True, check=False)
         else:
-            subprocess.run(["packwiz","init","-r","--name",modpack_name,"--author",dev_name,"--modloader",loader,f"--{loader}-latest",f"--version={release}+{loader}-{MC_version}",f"--mc-version={MC_version}"], shell=True)
+            subprocess.run(["packwiz","init","-r","--name",modpack_name,"--author",dev_name,"--modloader",loader,f"--{loader}-latest",f"--version={release}+{loader}-{mc_version}",f"--mc-version={mc_version}"], shell=True, check=False)
 
         # Export .mrpack
-        subprocess.run(["packwiz","mr","export","-o",str(os.path.join(root,"bin",MC_version,release,f"{modpack_name}-{release}+{loader}-{MC_version}.mrpack"))], shell=True)
+        subprocess.run(["packwiz","mr","export","-o",str(os.path.join(root,"bin",mc_version,release,f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"))], shell=True, check=False)
         input()
 
         current_pack = os.path.join(
             root,
             "bin",
-            MC_version,
+            mc_version,
             release,
-            modpack_name + "-" + release + "+" + loader + "-" + MC_version + ".mrpack",
+            modpack_name + "-" + release + "+" + loader + "-" + mc_version + ".mrpack",
         )
         old_pack = os.path.join(
             root,
             "bin",
-            MC_version,
+            mc_version,
             older_version,
             modpack_name
             + "-"
@@ -42,7 +43,7 @@ def build_modpack(modpack_name, dev_name, root, editions):
             + "+"
             + loader
             + "-"
-            + MC_version
+            + mc_version
             + ".mrpack",
         )
 
@@ -58,12 +59,12 @@ def build_modpack(modpack_name, dev_name, root, editions):
                 os.path.join(
                     root,
                     "bin",
-                    MC_version,
+                    mc_version,
                     release,
-                    f"Changelog-{release}+{loader}-{MC_version}.md",
+                    f"Changelog-{release}+{loader}-{mc_version}.md",
                 ),
                 "--config",
-                r"D:\Modpack DevTools\config.json"],shell=True
+                r"D:\Modpack DevTools\config.json"],shell=True, check=False,
             )
         else:
             # If the .mrpack file doesn't exist, write "No changelog available" and print a warning
@@ -71,14 +72,12 @@ def build_modpack(modpack_name, dev_name, root, editions):
                 os.path.join(
                     root,
                     "bin",
-                    MC_version,
+                    mc_version,
                     release,
-                    f"Changelog-{release}+{loader}-{MC_version}.md",
+                    f"Changelog-{release}+{loader}-{mc_version}.md",
                 ),
                 "w",
             ) as file:
                 file.write("No changelog available")
 
-            print("No changelog was available")
 
-        print(f"{modpack_name}-{release} for {loader} {MC_version} done")

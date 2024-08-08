@@ -4,7 +4,7 @@ import subprocess
 
 def build_modpack(modpack_name, dev_name, root, editions) -> None:
     mc_version = editions[0].split("\\")[0]
-    older_version = (os.listdir(os.path.join(root, "bin", mc_version)))[-1]
+    older_version = os.listdir(os.path.join(root, "bin", mc_version))[-1] if os.listdir(os.path.join(root, "bin", mc_version)) else "None"
 
     release = input(f"Enter the release number (latest release {older_version}): ")
 
@@ -15,7 +15,7 @@ def build_modpack(modpack_name, dev_name, root, editions) -> None:
         _, loader = edition.split("\\")
         os.makedirs(os.path.join(root, "bin", mc_version, release), exist_ok=True)
 
-        if mc_version == "1.21.1":
+        if mc_version == "1.21.2":
             tmp = input("Snapshot version")
             subprocess.run(["packwiz","init","-r","--name",modpack_name,"--author",dev_name,"--modloader",loader,f"--{loader}-latest",f"--version={release}+{loader}-{mc_version}",f"--mc-version={tmp}"],shell=True, check=False)
         else:
@@ -23,7 +23,6 @@ def build_modpack(modpack_name, dev_name, root, editions) -> None:
 
         # Export .mrpack
         subprocess.run(["packwiz","mr","export","-o",str(os.path.join(root,"bin",mc_version,release,f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"))], shell=True, check=False)
-        input()
 
         current_pack = os.path.join(
             root,

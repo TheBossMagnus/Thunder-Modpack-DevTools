@@ -22,15 +22,13 @@ editions = [
     r"1.20.6\fabric",
     r"1.21\quilt",
     r"1.21\fabric",
+    r"1.21.1\fabric"
 ]
 
 def main() -> None:
     try:
         global editions, root, modpack_name, modpack_author
         tool = sys.argv[1]
-
-        if sys.argv[2]:
-            return
 
         targets = sys.argv[2:]
         editions = [edition for edition in editions if any(target in edition for target in targets)]

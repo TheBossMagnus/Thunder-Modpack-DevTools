@@ -1,6 +1,7 @@
 *.ini
 *.exe
 *.cfg
+packwiz
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -17,12 +17,12 @@ def build_modpack(modpack_name, dev_name, root, editions) -> None:
 
         if mc_version == "1.21.2":
             tmp = input("Snapshot version")
-            subprocess.run(["packwiz","init","-r","--name",modpack_name,"--author",dev_name,"--modloader",loader,f"--{loader}-latest",f"--version={release}+{loader}-{mc_version}",f"--mc-version={tmp}"],shell=True, check=False)
+            subprocess.run(["packwiz", "init", "-r", "--name", modpack_name, "--author", dev_name, "--modloader", loader, f"--{loader}-latest", f"--version={release}+{loader}-{mc_version}", f"--mc-version={tmp}"], shell=True, check=False)
         else:
-            subprocess.run(["packwiz","init","-r","--name",modpack_name,"--author",dev_name,"--modloader",loader,f"--{loader}-latest",f"--version={release}+{loader}-{mc_version}",f"--mc-version={mc_version}"], shell=True, check=False)
+            subprocess.run(["packwiz", "init", "-r", "--name", modpack_name, "--author", dev_name, "--modloader", loader, f"--{loader}-latest", f"--version={release}+{loader}-{mc_version}", f"--mc-version={mc_version}"], shell=True, check=False)
 
         # Export .mrpack
-        subprocess.run(["packwiz","mr","export","-o",str(os.path.join(root,"bin",mc_version,release,f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"))], shell=True, check=False)
+        subprocess.run(["packwiz", "mr", "export", "-o", str(os.path.join(root, "bin", mc_version, release, f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"))], shell=True, check=False)
 
         current_pack = os.path.join(
             root,
@@ -36,34 +36,31 @@ def build_modpack(modpack_name, dev_name, root, editions) -> None:
             "bin",
             mc_version,
             older_version,
-            modpack_name
-            + "-"
-            + older_version
-            + "+"
-            + loader
-            + "-"
-            + mc_version
-            + ".mrpack",
+            modpack_name + "-" + older_version + "+" + loader + "-" + mc_version + ".mrpack",
         )
 
         if os.path.exists(old_pack) and os.path.exists(current_pack):
             # Generate the changelog
-            subprocess.run([
-                "ModpackChangelogger.exe",
-                "--old",
-                old_pack,
-                "--new",
-                current_pack,
-                "--file",
-                os.path.join(
-                    root,
-                    "bin",
-                    mc_version,
-                    release,
-                    f"Changelog-{release}+{loader}-{mc_version}.md",
-                ),
-                "--config",
-                os.path.join(os.path.abspath(__file__),"config.json")],shell=True, check=False,
+            subprocess.run(
+                [
+                    "modpack-changelogger",
+                    "--old",
+                    old_pack,
+                    "--new",
+                    current_pack,
+                    "--file",
+                    os.path.join(
+                        root,
+                        "bin",
+                        mc_version,
+                        release,
+                        f"Changelog-{release}+{loader}-{mc_version}.md",
+                    ),
+                    "--config",
+                    os.path.join(os.path.abspath(__file__), "config.json"),
+                ],
+                shell=True,
+                check=False,
             )
         else:
             # If the .mrpack file doesn't exist, write "No changelog available" and print a warning
@@ -78,5 +75,3 @@ def build_modpack(modpack_name, dev_name, root, editions) -> None:
                 "w",
             ) as file:
                 file.write("No changelog available")
-
-

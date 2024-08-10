@@ -8,7 +8,7 @@ from MUpdateList import update_list
 
 modpack_name = "Thunder"
 modpack_author = "TheBossMagnus"
-root = r"D:\Thunder"
+root = r"D:\dev\Thunder"
 supp_editions = [
     r"1.16.5\fabric",
     r"1.18.2\fabric",

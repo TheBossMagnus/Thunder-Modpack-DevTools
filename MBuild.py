@@ -63,7 +63,7 @@ def build_modpack(modpack_name, dev_name, root, editions) -> None:
                     f"Changelog-{release}+{loader}-{mc_version}.md",
                 ),
                 "--config",
-                r"D:\Modpack DevTools\config.json"],shell=True, check=False,
+                os.path.join(os.path.abspath(__file__),"config.json")],shell=True, check=False,
             )
         else:
             # If the .mrpack file doesn't exist, write "No changelog available" and print a warning

@@ -1,5 +1,4 @@
-import pathlib
-import sys
+import os
 
 modpack_name = "Thunder"
 modpack_author = "TheBossMagnus"
@@ -20,4 +19,4 @@ supp_editions = [
     ("1.21.1","fabric")
 ]
 
-packwiz_dir = str(pathlib.Path(root, "packwiz", ".exe" if sys.platform == "win32" else ""))
+packwiz_dir = f"packwiz{'.exe' if os.name == 'nt' else ''}"

@@ -7,21 +7,19 @@ from MUpdate import update
 from MUpdateList import update_list
 from config import supp_editions
 
+
 def main() -> None:
     try:
         global supp_editions, root, modpack_name, modpack_author
         tool = sys.argv[1]
 
         targets = sys.argv[2:]
-        
-        if 'a' in targets or 'all' in targets:
+
+        if "a" in targets or "all" in targets:
             editions = supp_editions
         else:
-            editions = [
-                edition for edition in supp_editions
-                if any(target in edition for target in targets)
-            ]
-        
+            editions = [edition for edition in supp_editions if any(target in edition for target in targets)]
+
         if not editions:
             print("No edition selected")
             return
@@ -45,6 +43,7 @@ def main() -> None:
             return
     except KeyboardInterrupt:
         print("\nOperation cancelled by user.")
+
 
 if __name__ == "__main__":
     main()

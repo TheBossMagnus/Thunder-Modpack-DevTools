@@ -23,3 +23,5 @@ def update_list(editions) -> None:
         # Remove unwanted strings from the output using regex patterns
         for pattern in patterns_to_remove:
             output = re.sub(pattern, "", output)
+
+        print(output)

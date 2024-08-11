@@ -1,6 +1,6 @@
 import os
 import subprocess
-from config import root, dev_name, modpack_name
+from config import root, modpack_author, modpack_name
 
 
 def publish(editions) -> None:
@@ -14,7 +14,7 @@ def publish(editions) -> None:
         os.system(f"git commit -S -m {version}+{mc_version}")
         os.system("git push")
 
-        subprocess.run(["gh", "release", "create", f"{version}+{mc_version}", "-R", f"{dev_name}/{modpack_name}", "-d", "-t", f"Thunder {version} for {mc_version}", "--notes", "GitHub releases are not recommended for use. Please download the modpack from the Modrinth page instead."], check=False)
+        subprocess.run(["gh", "release", "create", f"{version}+{mc_version}", "-R", f"{modpack_author}/{modpack_name}", "-d", "-t", f"Thunder {version} for {mc_version}", "--notes", "GitHub releases are not recommended for use. Please download the modpack from the Modrinth page instead."], check=False)
 
         files_to_upload = [os.path.join(root, "bin", mc_version, version, file) for file in os.listdir(os.path.join(root, "bin", mc_version, version)) if file.endswith(".md") or file.endswith(".mrpack")]
 

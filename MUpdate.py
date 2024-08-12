@@ -8,4 +8,4 @@ def update(editions) -> None:
         os.chdir(os.path.join(root, "src", mc_version, loader))
 
         # Update all mods with packwiz
-        subprocess.run([packwiz_dir, "update", "--all", "-y"], shell=True, check=False)
+        subprocess.run([packwiz_dir, "update", "--all", "--yes"], check=False)

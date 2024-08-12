@@ -1,13 +1,18 @@
 import os
 import subprocess
 from config import root, modpack_author, modpack_name
+import glob
 
 
 def publish(editions) -> None:
     mc_versions = set(mc_version for mc_version, _ in editions)
 
     for mc_version in mc_versions:
-        version = (os.listdir(os.path.join(root, "bin", mc_version)))[-1]
+        path = os.path.join(root, "bin", editions[0][0])
+        directories = glob.glob(os.path.join(path, '*/'))
+
+        older_version = max(directories, key=os.path.getctime) if directories else "none"
+        version = older_version.rstrip('/').split('/')[-1]
 
         os.chdir(root)
         os.system(f"git add {os.path.join(root,"src",mc_version)}")

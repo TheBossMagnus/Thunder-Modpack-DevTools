@@ -1,10 +1,17 @@
 import os
 import subprocess
 from config import modpack_name, modpack_author, root, packwiz_dir
+import glob
 
 
 def build_modpack(editions) -> None:
-    older_version = os.listdir(os.path.join(root, "bin", editions[0][0]))[-1] if os.listdir(os.path.join(root, "bin", editions[0][0])) else "None"
+
+
+    path = os.path.join(root, "bin", editions[0][0])
+    directories = glob.glob(os.path.join(path, '*/'))
+
+    older_version = max(directories, key=os.path.getctime) if directories else "none"
+    older_version = older_version.rstrip('/').split('/')[-1]
     release = input(f"Enter the release number (latest release {older_version}): ")
 
     for mc_version, loader in editions:
@@ -12,10 +19,10 @@ def build_modpack(editions) -> None:
 
         modpack_src = os.path.join(root, "src", mc_version, loader)
         minecraft_build = input() if mc_version == "1.21.2" else mc_version  # for snapshots
-        subprocess.run([packwiz_dir, "init", "-r", "--name", modpack_name, "--author", modpack_author, "--modloader", loader, f"--{loader}-latest", f"--version={release}+{loader}-{mc_version}", f"--mc-version={minecraft_build}"], cwd=modpack_src, shell=True, check=False, stdout=subprocess.DEVNULL)
+        subprocess.run([packwiz_dir, "init", "-r", "--name", modpack_name, "--author", modpack_author, "--modloader", loader, f"--{loader}-latest", f"--version={release}+{loader}-{mc_version}", f"--mc-version={minecraft_build}"], cwd=modpack_src, check=False, stdout=subprocess.DEVNULL)
 
         # Export .mrpack
-        subprocess.run([packwiz_dir, "mr", "export", "-o", str(os.path.join(root, "bin", mc_version, release, f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"))], cwd=modpack_src, shell=True, check=False, stdout=subprocess.DEVNULL)
+        subprocess.run([packwiz_dir, "mr", "export", "-o", str(os.path.join(root, "bin", mc_version, release, f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"))], cwd=modpack_src, check=False, stdout=subprocess.DEVNULL)
 
         current_pack = os.path.join(
             root,
@@ -44,7 +51,6 @@ def build_modpack(editions) -> None:
             # Generate the changelog
             subprocess.run(
                 ["modpack-changelogger", "--old", old_pack, "--new", current_pack, "--file", changelog_file, "--config", config_path],
-                shell=True,
                 check=False,
             )
         else:

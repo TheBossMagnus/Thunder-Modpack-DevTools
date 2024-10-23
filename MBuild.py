@@ -6,19 +6,18 @@ import glob
 
 def build_modpack(editions) -> None:
 
-
     path = os.path.join(root, "bin", editions[0][0])
-    directories = glob.glob(os.path.join(path, '*/'))
+    directories = glob.glob(os.path.join(path, "*/"))
 
     older_version = max(directories, key=os.path.getctime) if directories else "none"
-    older_version = older_version.rstrip('/').split('/')[-1]
+    older_version = older_version.rstrip("/").split("/")[-1]
     release = input(f"Enter the release number (latest release {older_version}): ")
 
     for mc_version, loader in editions:
         os.makedirs(os.path.join(root, "bin", mc_version, release), exist_ok=True)
 
         modpack_src = os.path.join(root, "src", mc_version, loader)
-        minecraft_build = input() if mc_version == "1.21.2" else mc_version  # for snapshots
+        minecraft_build = mc_version
         subprocess.run([packwiz_dir, "init", "-r", "--name", modpack_name, "--author", modpack_author, "--modloader", loader, f"--{loader}-latest", f"--version={release}+{loader}-{mc_version}", f"--mc-version={minecraft_build}"], cwd=modpack_src, check=False, stdout=subprocess.DEVNULL)
 
         # Export .mrpack

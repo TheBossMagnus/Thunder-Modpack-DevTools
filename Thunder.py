@@ -6,6 +6,7 @@ from MBulkRun import bulk_run
 from MPublish import publish
 from MUpdate import update
 from MUpdateList import update_list
+from MUpdateVersions import update_game_versions
 from config import supp_editions
 
 
@@ -16,10 +17,14 @@ def main() -> None:
 
         targets = sys.argv[2:]
 
-        if "a" in targets or "all" in targets:
+        if not targets or "a" in targets or "all" in targets:
             editions = supp_editions
         else:
             editions = [edition for edition in supp_editions if any(target in edition for target in targets)]
+
+        if tool in ("uv", "updateversion"):
+            update_game_versions()
+            return
 
         if not editions:
             print("No edition selected")
@@ -40,7 +45,7 @@ def main() -> None:
             build_modpack(editions)
             publish(editions)
         else:
-            print("Inavlid tool")
+            print("Invalid tool")
             return
     except KeyboardInterrupt:
         print("\nOperation cancelled by user.")

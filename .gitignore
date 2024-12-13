@@ -2,6 +2,8 @@
 *.exe
 *.cfg
 packwiz
+*.jar
+*.run
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

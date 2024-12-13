@@ -9,10 +9,10 @@ def publish(editions) -> None:
 
     for mc_version in mc_versions:
         path = os.path.join(root, "bin", editions[0][0])
-        directories = glob.glob(os.path.join(path, '*/'))
+        directories = glob.glob(os.path.join(path, "*/"))
 
         older_version = max(directories, key=os.path.getctime) if directories else "none"
-        version = older_version.rstrip('/').split('/')[-1]
+        version = older_version.rstrip("/").split("/")[-1]
 
         os.chdir(root)
         os.system(f"git add {os.path.join(root,"src",mc_version)}")
@@ -21,7 +21,7 @@ def publish(editions) -> None:
 
         subprocess.run(["gh", "release", "create", f"{version}+{mc_version}", "-R", f"{modpack_author}/{modpack_name}", "-d", "-t", f"Thunder {version} for {mc_version}", "--notes", "GitHub releases are not recommended for use. Please download the modpack from the Modrinth page instead."], check=False)
 
-        files_to_upload = [os.path.join(root, "bin", mc_version, version, file) for file in os.listdir(os.path.join(root, "bin", mc_version, version)) if file.endswith(".md") or file.endswith(".mrpack")]
+        files_to_upload = [os.path.join(root, "bin", mc_version, version, file) for file in os.listdir(os.path.join(root, "bin", mc_version, version)) if file.endswith(".md") or file.endswith(".mrpack") or file.endswith(".zip")]
 
         for file in files_to_upload:
             os.system(f"gh release upload {version}+{mc_version} {file}")

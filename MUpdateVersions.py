@@ -1,6 +1,7 @@
 import requests
 from requests.structures import CaseInsensitiveDict
 
+
 def update_game_versions():
     auth_token = input("Enter authorization token: ")
     version_id = input("Enter version ID: ")

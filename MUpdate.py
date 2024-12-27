@@ -1,11 +1,11 @@
 import os
 import subprocess
 from config import packwiz_dir, root
+from typing import Tuple, List
 
+def update(edition: Tuple[str, List[str]]) -> None:
+        mc_version, _ = edition
+    
+        os.chdir(os.path.join(root, "src", mc_version))
 
-def update(editions) -> None:
-    for mc_version, loader in editions:
-        os.chdir(os.path.join(root, "src", mc_version, loader))
-
-        # Update all mods with packwiz
-        subprocess.run([packwiz_dir, "update", "--all", "--yes"], check=False)
+        subprocess.run([packwiz_dir, "update", "-a"], check=False)

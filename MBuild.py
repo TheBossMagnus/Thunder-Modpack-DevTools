@@ -5,25 +5,23 @@ import shutil
 from typing import Tuple, List, Dict
 import json
 
+
 def adjust_loader(modpack_src: str, loader: str) -> None:
     """Update pakku-lock.json with correct loader version."""
     pakku_file = os.path.join(modpack_src, "pakku-lock.json")
-    loader_versions: Dict[str, Dict[str, str]] = {
-        "fabric": {"fabric": "0.16.9"},
-        "quilt": {"quilt": "0.27.1"}
-    }
-    
+    loader_versions: Dict[str, Dict[str, str]] = {"fabric": {"fabric": "0.16.9"}, "quilt": {"quilt": "0.27.1"}}
+
     with open(pakku_file, "r") as file:
         data = json.load(file)
-    
+
     data["loaders"] = loader_versions[loader]
-    
+
     with open(pakku_file, "w") as file:
         json.dump(data, file, indent=4)
 
 
 def build_modpack(edition: Tuple[str, List[str]]) -> None:
-    config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json") # Path to the config for modpack-changelogger
+    config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")  # Path to the config for modpack-changelogger
     mc_version, loaders = edition
     older_version = get_latest_version(mc_version)
     release = input(f"Enter the release number (latest release {older_version}): ")
@@ -37,7 +35,7 @@ def build_modpack(edition: Tuple[str, List[str]]) -> None:
             "bin",
             mc_version,
             release,
-            modpack_name + "-" + release + "+" + loaders[0] + "-" + mc_version + ".mrpack",
+            modpack_name + "-" + release + "+" + loader + "-" + mc_version + ".mrpack",
         )
 
         cfzip_name = os.path.join(
@@ -45,34 +43,34 @@ def build_modpack(edition: Tuple[str, List[str]]) -> None:
             "bin",
             mc_version,
             release,
-            modpack_name + "-" + release + "+" + loaders[0] + "-" + mc_version + ".zip",
+            modpack_name + "-" + release + "+" + loader + "-" + mc_version + ".zip",
         )
         old_pack = os.path.join(
             root,
             "bin",
             mc_version,
             older_version,
-            modpack_name + "-" + older_version + "+" + loaders[0] + "-" + mc_version + ".mrpack",
+            modpack_name + "-" + older_version + "+" + loader + "-" + mc_version + ".mrpack",
         )
         changelog_file = os.path.join(
             root,
             "bin",
             mc_version,
             release,
-            f"Changelog-{release}+{loaders[0]}-{mc_version}.md",
+            f"Changelog-{release}+{loader}-{mc_version}.md",
         )
 
-        #temp workarround until pakku implements a way to switch the loader
+        # temp workarround until pakku implements a way to switch the loader
         adjust_loader(modpack_src, loader)
 
-        subprocess.run([packwiz_dir, "cfg","-a",f"--version={release}+{loader}-{mc_version}"], cwd=modpack_src, check=False)
+        subprocess.run([packwiz_dir, "cfg", "-v", f"{release}+{loader}-{mc_version}"], cwd=modpack_src, check=False)
         # Export .mrpack
-        subprocess.run([packwiz_dir, "export"] , cwd=modpack_src, check=False)
+        subprocess.run([packwiz_dir, "export"], cwd=modpack_src, check=False)
         # Move the .mrpack file to the bin folder
-        shutil.move(os.path.join(modpack_src, "build", "modrinth", f"{modpack_name}-{release}.zip"), os.path.join(root, "bin", mc_version, release, mrpack_name))
-        shutil.move(os.path.join(modpack_src, "build", "curseforge", f"{modpack_name}-{release}.zip"), os.path.join(root, "bin", mc_version, release, cfzip_name))
+        shutil.move(os.path.join(modpack_src, "build", "modrinth", f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"), os.path.join(root, "bin", mc_version, release, mrpack_name))
+        shutil.move(os.path.join(modpack_src, "build", "curseforge", f"{modpack_name}-{release}+{loader}-{mc_version}.zip"), os.path.join(root, "bin", mc_version, release, cfzip_name))
 
-        #remove the build folder
+        # remove the build folder
         shutil.rmtree(os.path.join(modpack_src, "build"))
 
         # curseforge uses the same changelog as modrinth

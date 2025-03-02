@@ -9,7 +9,7 @@ import json
 def adjust_loader(modpack_src: str, loader: str) -> None:
     """Update pakku-lock.json with correct loader version."""
     pakku_file = os.path.join(modpack_src, "pakku-lock.json")
-    loader_versions: Dict[str, Dict[str, str]] = {"fabric": {"fabric": "0.16.9"}, "quilt": {"quilt": "0.27.1"}}
+    loader_versions: Dict[str, Dict[str, str]] = {"fabric": {"fabric": "0.16.10"}, "quilt": {"quilt": "0.28.0"}}
 
     with open(pakku_file, "r") as file:
         data = json.load(file)

@@ -19,8 +19,10 @@ def test_pack(mrpack_path: str) -> bool:
     def silent_callback(status):
         pass
 
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
     loader = "fabric" if "fabric" in mrpack_path else "quilt"
-    minecraft_directory = "/home/tbmag/code/Modpack_DevTools/testMcs/" + str(mrpack_information["minecraftVersion"]) + "/" + str(loader)
+    minecraft_directory = os.path.join(script_dir, "testMcs", str(mrpack_information["minecraftVersion"]), str(loader))
 
     # Delete directory contents if the directory exists
     if not os.path.exists(minecraft_directory):
@@ -103,7 +105,7 @@ def test_pack(mrpack_path: str) -> bool:
     if result:
         print("\033[1;32;40mPASSED")
     else:
-        print("\033[0;31;40mFAILED")
+        print("\033[0;31;4mFAILED")
         os.system(f"code --new-window {log_file_path}")
 
     print("\033[0m")  # Reset color

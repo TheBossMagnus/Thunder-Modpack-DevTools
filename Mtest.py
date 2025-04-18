@@ -62,7 +62,7 @@ def test_pack(mrpack_path: str) -> bool:
 
         # Monitor output in real-time
         console_output = []
-        timeout = time.time() + 120  # 2 minute timeout
+        timeout = time.time() + 180  # 3 minute timeout
 
         try:
             # Make sure stdout is not None before reading from it

@@ -13,7 +13,7 @@ def publish(edition: Tuple[str, List[str]]) -> None:
     files_to_upload = [os.path.join(root, "bin", mc_version, version, file) for file in os.listdir(os.path.join(root, "bin", mc_version, version)) if file.endswith(".md") or file.endswith(".mrpack") or file.endswith(".zip")]
 
     for file in files_to_upload:
-        if file.endswith(".mrpack"):
+        if file.endswith(".mrpack") and "fabric" in file:
             if not test_pack(file):
                 print("Test failed, do you want to continue? (y/n)")
                 if input().lower() != "y":

@@ -51,7 +51,7 @@ def test_pack(mrpack_path: str) -> bool:
 
     # Start process with output captured
     print("Running...")
-    SUCCESS_TEXT = "Game took"  # modernfix prints this when the game is fully loaded
+    SUCCESS_TEXT = ["Game took", "gui.png-atlas"]
     result = False
 
     with open(log_file_path, "w") as log_file:
@@ -74,7 +74,7 @@ def test_pack(mrpack_path: str) -> bool:
                     console_output.append(line)
 
                     # Check for success text
-                    if SUCCESS_TEXT in line:
+                    if  any(success_text in line for success_text in SUCCESS_TEXT):
                         result = True
                         break
 

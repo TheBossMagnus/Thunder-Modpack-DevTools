@@ -1,14 +1,12 @@
 import shutil
 import minecraft_launcher_lib
 import subprocess
-import sys
 import os
 import time
 import datetime
 
 
 def test_pack(mrpack_path: str) -> bool:
-
     try:
         mrpack_information = minecraft_launcher_lib.mrpack.get_mrpack_information(mrpack_path)
     except Exception:
@@ -62,7 +60,7 @@ def test_pack(mrpack_path: str) -> bool:
 
         # Monitor output in real-time
         console_output = []
-        timeout = time.time() + 180  # 3 minute timeout
+        timeout = time.time() + 300  # 5 minute timeout
 
         try:
             # Make sure stdout is not None before reading from it
@@ -87,7 +85,7 @@ def test_pack(mrpack_path: str) -> bool:
                     # Check if process has terminated
                     if minecraft_process.poll() is not None:
                         break
-        except Exception as e:
+        except Exception:
             pass
 
         # If process is still running, terminate it

@@ -1,7 +1,8 @@
 import os
 import subprocess
-from config import packwiz_dir, root, supp_editions
+from config import packwiz_dir, root
 from typing import Tuple, List
+
 
 def update_list(edition: Tuple[str, List[str]]) -> None:
     mc_version, _ = edition

@@ -11,9 +11,9 @@ supp_editions = {
     "1.20.1": ["quilt", "fabric"],
     "1.20.4": ["quilt", "fabric"],
     "1.21.1": ["quilt", "fabric"],
-    "1.21.3": ["quilt", "fabric"],
     "1.21.4": ["quilt", "fabric"],
     "1.21.5": ["quilt", "fabric"],
+    "1.21.6": ["fabric"],
 }
 
 packwiz_dir = "pakku"
@@ -26,5 +26,5 @@ def get_latest_version(mc_version: str) -> str:
     versions = [p for p in version_path.glob("*") if p.is_dir()]
     if not versions:
         print(f"No versions found for Minecraft {mc_version}, if this is the first release for this mc version, you can ignore this message.")
-        return "No older version"  # Just a random string
+        return "No older version"  # Just a placeholder to avoid errors
     return versions[-1].name

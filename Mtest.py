@@ -96,8 +96,10 @@ def test_pack(mrpack_path: str) -> bool:
             except subprocess.TimeoutExpired:
                 minecraft_process.kill()
 
-        # Make sure no Java processes are left
-        os.system("pkill -f java")
+    # Close the stdout pipe and the process
+    if minecraft_process.stdout and not minecraft_process.stdout.closed:
+        minecraft_process.stdout.close()
+        minecraft_process.kill()
 
     # Handle the results
     if result:

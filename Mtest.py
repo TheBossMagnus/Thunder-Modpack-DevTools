@@ -110,10 +110,6 @@ def test_pack(mrpack_path: str) -> bool:
 
     print("\033[0m")  # Reset color
 
-    # Cleanup silently
-    # Clean up local config folder if it exists
-    if os.path.exists("config"):
-        shutil.rmtree("config")
 
     # Clean up Minecraft directory mods and config folders
     minecraft_mods_dir = os.path.join(minecraft_directory, "mods")

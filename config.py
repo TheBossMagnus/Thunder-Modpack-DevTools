@@ -5,12 +5,11 @@ modpack_name = "Thunder"
 modpack_author = "TheBossMagnus"
 root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Thunder")
 supp_editions = {
-    "1.20.1": ["quilt", "fabric"],
-    "1.20.4": ["quilt", "fabric"],
-    "1.21.1": ["quilt", "fabric"],
-    "1.21.4": ["quilt", "fabric"],
-    "1.21.5": ["quilt", "fabric"],
-    "1.21.6": ["fabric"],
+    "1.20.1": ["fabric"],
+    "1.20.4": ["fabric"],
+    "1.21.1": ["fabric"],
+    "1.21.4": ["fabric"],
+    "1.21.8": ["fabric"],
 }
 
 packwiz_dir = "pakku"

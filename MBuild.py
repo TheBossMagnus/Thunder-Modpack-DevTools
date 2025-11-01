@@ -1,30 +1,35 @@
 import os
 import subprocess
+
+from click import pause
 from config import modpack_name, root, packwiz_dir, get_latest_version
 import shutil
-from typing import Tuple, List, Dict
-import json
+from typing import Tuple, List
 
 
-def adjust_loader(modpack_src: str, loader: str) -> None:
-    """Update pakku-lock.json with correct loader version."""
-    pakku_file = os.path.join(modpack_src, "pakku-lock.json")
-    loader_versions: Dict[str, Dict[str, str]] = {"fabric": {"fabric": "0.17.3"}, "quilt": {"quilt": "0.29.1"}}
-
-    with open(pakku_file, "r") as file:
-        data = json.load(file)
-
-    data["loaders"] = loader_versions[loader]
-
-    with open(pakku_file, "w") as file:
-        json.dump(data, file, indent=4)
+def get_release_number(old_release_number: str) -> str:
+    while True:
+        print("M = major, m = minor, p = patch, c = custom")
+        choice = input(f"Select release type (latest available {old_release_number}): ").strip()
+        parts = old_release_number.split(".")
+        if choice == "M":
+            return f"{int(parts[0]) + 1}.0.0"
+        elif choice == "m":
+            return f"{parts[0]}.{int(parts[1]) + 1}.0"
+        elif choice == "p":
+            return f"{parts[0]}.{parts[1]}.{int(parts[2]) + 1}"
+        elif choice == "c":
+            return input("Enter custom release number: ").strip()
+        else:
+            print("Invalid choice. Please try again.")
 
 
 def build_modpack(edition: Tuple[str, List[str]]) -> None:
     config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")  # Path to the config for modpack-changelogger
     mc_version, loaders = edition
     older_version = get_latest_version(mc_version)
-    release = input(f"Enter the release number (latest release {older_version}): ")
+    release = get_release_number(older_version)
+    print(f"Building modpack for Minecraft {mc_version} version {release} with loaders: {', '.join(loaders)}")
 
     os.makedirs(os.path.join(root, "bin", mc_version, release), exist_ok=True)
     modpack_src = os.path.join(root, "src", mc_version)
@@ -45,7 +50,7 @@ def build_modpack(edition: Tuple[str, List[str]]) -> None:
             release,
             modpack_name + "-" + release + "+" + loader + "-" + mc_version + ".zip",
         )
-        old_pack = os.path.join(
+        old_mrpack = os.path.join(
             root,
             "bin",
             mc_version,
@@ -60,9 +65,6 @@ def build_modpack(edition: Tuple[str, List[str]]) -> None:
             f"Changelog-{release}+{loader}-{mc_version}.md",
         )
 
-        # temp workarround until pakku implements a way to switch the loader
-        adjust_loader(modpack_src, loader)
-
         subprocess.run([packwiz_dir, "cfg", "-v", f"{release}+{loader}-{mc_version}"], cwd=modpack_src, check=False)
         # Export .mrpack
         subprocess.run([packwiz_dir, "export"], cwd=modpack_src, check=False)
@@ -74,10 +76,10 @@ def build_modpack(edition: Tuple[str, List[str]]) -> None:
         shutil.rmtree(os.path.join(modpack_src, "build"))
 
         # curseforge uses the same changelog as modrinth
-        if os.path.exists(old_pack):
+        if os.path.exists(old_mrpack):
             # Generate the changelog
             subprocess.run(
-                ["modpack-changelogger", "--old", old_pack, "--new", mrpack_name, "--file", changelog_file, "--config", config_path],
+                ["modpack-changelogger", "--old", old_mrpack, "--new", mrpack_name, "--file", changelog_file, "--config", config_path],
                 check=False,
             )
         else:

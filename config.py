@@ -4,14 +4,7 @@ from pathlib import Path
 modpack_name = "Thunder"
 modpack_author = "TheBossMagnus"
 root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Thunder")
-supp_editions = {
-    "1.20.1": ["fabric"],
-    "1.20.4": ["fabric"],
-    "1.21.1": ["fabric"],
-    "1.21.4": ["fabric"],
-    "1.21.8": ["fabric"],
-    "1.21.10": ["fabric"],
-}
+supp_editions = {"1.20.1": ["fabric"], "1.20.4": ["fabric"], "1.21.1": ["fabric"], "1.21.4": ["fabric"], "1.21.8": ["fabric"], "1.21.10": ["fabric"], "1.21.11": ["fabric"]}
 
 packwiz_dir = "pakku"
 

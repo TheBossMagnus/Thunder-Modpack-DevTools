@@ -1,10 +1,8 @@
 import os
 import subprocess
 
-from click import pause
 from config import modpack_name, root, packwiz_dir, get_latest_version
 import shutil
-from typing import Tuple, List
 
 
 def get_release_number(old_release_number: str) -> str:
@@ -24,7 +22,7 @@ def get_release_number(old_release_number: str) -> str:
             print("Invalid choice. Please try again.")
 
 
-def build_modpack(edition: Tuple[str, List[str]]) -> None:
+def build_modpack(edition: tuple[str, list[str]]) -> None:
     config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")  # Path to the config for modpack-changelogger
     mc_version, loaders = edition
     older_version = get_latest_version(mc_version)

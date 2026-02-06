@@ -1,10 +1,9 @@
 import os
 import subprocess
 from config import packwiz_dir, root
-from typing import Tuple, List
 
 
-def update_list(edition: Tuple[str, List[str]]) -> None:
+def update_list(edition: tuple[str, list[str]]) -> None:
     mc_version, _ = edition
     os.chdir(os.path.join(root, "src", mc_version))
     subprocess.run([packwiz_dir, "status"], check=False)

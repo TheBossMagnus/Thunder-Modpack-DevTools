@@ -1,11 +1,10 @@
 import os
 import subprocess
 from config import root, modpack_author, modpack_name, get_latest_version
-from typing import Tuple, List
 from Mtest import test_pack
 
 
-def publish(edition: Tuple[str, List[str]]) -> None:
+def publish(edition: tuple[str, list[str]]) -> None:
     mc_version, _ = edition
     version = get_latest_version(mc_version)
     files_to_upload = [os.path.join(root, "bin", mc_version, version, file) for file in os.listdir(os.path.join(root, "bin", mc_version, version)) if file.endswith(".md") or file.endswith(".mrpack") or file.endswith(".zip")]

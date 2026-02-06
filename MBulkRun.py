@@ -1,9 +1,8 @@
 import os
 from config import root
-from typing import Tuple, List
 
 
-def bulk_run(editions: List[Tuple[str, List[str]]]) -> None:
+def bulk_run(editions: list[tuple[str, list[str]]]) -> None:
     command = input("Enter the command to run in all selected subfolders: ")
 
     for edition in editions:

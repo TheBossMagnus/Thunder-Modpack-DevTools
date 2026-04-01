@@ -5,7 +5,9 @@ from config import modpack_name, root, packwiz_dir, get_latest_version
 import shutil
 
 
-def get_release_number(old_release_number: str) -> str:
+def get_release_number(old_release_number: str, easy_input: bool) -> str:
+    if not easy_input:
+            return input("Enter release number: ").strip()
     while True:
         print("M = major, m = minor, p = patch, c = custom")
         choice = input(f"Select release type (latest available {old_release_number}): ").strip()
@@ -26,7 +28,7 @@ def build_modpack(edition: tuple[str, list[str]]) -> None:
     config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")  # Path to the config for modpack-changelogger
     mc_version, loaders = edition
     older_version = get_latest_version(mc_version)
-    release = get_release_number(older_version)
+    release = get_release_number(older_version, older_version != "No older version")
     print(f"Building modpack for Minecraft {mc_version} version {release} with loaders: {', '.join(loaders)}")
 
     os.makedirs(os.path.join(root, "bin", mc_version, release), exist_ok=True)

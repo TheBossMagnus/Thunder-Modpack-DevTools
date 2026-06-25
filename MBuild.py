@@ -1,13 +1,13 @@
 import os
 import subprocess
 
-from config import modpack_name, root, packwiz_dir, get_latest_version
+from config import modpack_name, root, pakku, get_latest_version
 import shutil
 
 
 def get_release_number(old_release_number: str, easy_input: bool) -> str:
     if not easy_input:
-            return input("Enter release number: ").strip()
+        return input("Enter release number: ").strip()
     while True:
         print("M = major, m = minor, p = patch, c = custom")
         choice = input(f"Select release type (latest available {old_release_number}): ").strip()
@@ -65,9 +65,9 @@ def build_modpack(edition: tuple[str, list[str]]) -> None:
             f"Changelog-{release}+{loader}-{mc_version}.md",
         )
 
-        subprocess.run([packwiz_dir, "cfg", "-v", f"{release}+{loader}-{mc_version}"], cwd=modpack_src, check=False)
+        subprocess.run([pakku, "cfg", "-v", f"{release}+{loader}-{mc_version}"], cwd=modpack_src, check=False)
         # Export .mrpack
-        subprocess.run([packwiz_dir, "export"], cwd=modpack_src, check=False)
+        subprocess.run([pakku, "export"], cwd=modpack_src, check=False)
         # Move the .mrpack file to the bin folder
         shutil.move(os.path.join(modpack_src, "build", "modrinth", f"{modpack_name}-{release}+{loader}-{mc_version}.mrpack"), os.path.join(root, "bin", mc_version, release, mrpack_name))
         shutil.move(os.path.join(modpack_src, "build", "curseforge", f"{modpack_name}-{release}+{loader}-{mc_version}.zip"), os.path.join(root, "bin", mc_version, release, cfzip_name))

@@ -1,6 +1,6 @@
 import os
 import subprocess
-from config import packwiz_dir, root
+from config import pakku, root
 
 
 def update(edition: tuple[str, list[str]]) -> None:
@@ -8,4 +8,4 @@ def update(edition: tuple[str, list[str]]) -> None:
 
     os.chdir(os.path.join(root, "src", mc_version))
 
-    subprocess.run([packwiz_dir, "update", "-a"], check=False)
+    subprocess.run([pakku, "update", "-a"], check=False)

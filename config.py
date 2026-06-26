@@ -3,9 +3,7 @@ from pathlib import Path
 
 modpack_name = "Thunder"
 modpack_author = "TheBossMagnus"
-root = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Thunder"
-)
+root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Thunder")
 supp_editions = {
     "1.20.1": ["fabric"],
     "1.21.1": ["fabric"],
@@ -23,8 +21,6 @@ def get_latest_version(mc_version: str) -> str:
     version_path = Path(root) / "bin" / mc_version
     versions = [p for p in version_path.glob("*") if p.is_dir()]
     if not versions:
-        print(
-            f"No versions found for Minecraft {mc_version}, if this is the first release for this mc version, you can ignore this message."
-        )
+        print(f"No versions found for Minecraft {mc_version}, if this is the first release for this mc version, you can ignore this message.")
         return "No older version"  # Just a placeholder to avoid errors
     return versions[-1].name

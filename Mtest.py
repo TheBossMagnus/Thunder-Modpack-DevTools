@@ -102,10 +102,11 @@ def test_pack(mrpack_path: str) -> bool:
         minecraft_process.stdout.close()
         minecraft_process.kill()
     if result:
-        print("\033[1;32;40mPASSED")
+        print("\033[1;32mPASSED")
     else:
-        print("\033[0;31;4mFAILED")
-        os.system(f"code --new-window {log_file_path}")
+        print("\033[1;31mFAILED")
+        subprocess.run(["tail", "-n", "20", log_file_path])
+        print(f"Full log available at: {log_file_path}")
     print("\033[0m")
     # Cleanup after run
     cleanup_mc_dir(minecraft_directory)

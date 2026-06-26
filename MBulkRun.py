@@ -1,5 +1,6 @@
 import os
 from config import root
+import subprocess
 
 
 def bulk_run(editions: list[tuple[str, list[str]]]) -> None:
@@ -8,4 +9,4 @@ def bulk_run(editions: list[tuple[str, list[str]]]) -> None:
     for edition in editions:
         mc_version, _ = edition
         os.chdir(os.path.join(root, "src", mc_version))
-        os.system(command)
+        subprocess.run(command, shell=True, check=False)

@@ -19,12 +19,12 @@ def publish(edition: tuple[str, list[str]]) -> None:
             break  # test just one file
 
     os.chdir(os.path.join(root, "src", mc_version))
-    os.system(f"git add {os.path.join(root, 'src', mc_version)}")
-    os.system(f"git commit -S -m {version}+{mc_version}")
-    os.system("git push")
+    subprocess.run(["git", "add", os.path.join(root, "src", mc_version)], check=False)
+    subprocess.run(["git", "commit", "-S", "-m", f"{version}+{mc_version}"], check=False)
+    subprocess.run(["git", "push"], check=False)
     subprocess.run(
         ["gh", "release", "create", f"{version}+{mc_version}", "-R", f"{modpack_author}/{modpack_name}", "-d", "-t", f"Thunder {version} for {mc_version}", "--notes", "GitHub releases are not recommended for use. Please download the modpack from the Modrinth or curseforge pages instead."],
         check=False,
     )
     for file in files_to_upload:
-        os.system(f"gh release upload {version}+{mc_version} {file}")
+        subprocess.run(["gh", "release", "upload", f"{version}+{mc_version}", file, "-R", f"{modpack_author}/{modpack_name}"], check=False)

@@ -1,9 +1,10 @@
-import shutil
-import minecraft_launcher_lib
-import subprocess
-import os
-import time
 import datetime
+import os
+import shutil
+import subprocess
+import time
+
+import minecraft_launcher_lib
 
 
 def cleanup_mc_dir(minecraft_directory):
@@ -19,16 +20,13 @@ def cleanup_mc_dir(minecraft_directory):
     for root, dirs, files in os.walk(minecraft_directory):
         for file in files:
             if file.endswith(".txt"):
-                try:
-                    os.remove(os.path.join(root, file))
-                except Exception:
-                    pass
+                os.remove(os.path.join(root, file))
 
 
 def test_pack(mrpack_path: str) -> bool:
     try:
         mrpack_information = minecraft_launcher_lib.mrpack.get_mrpack_information(mrpack_path)
-    except Exception:
+    except Exception:  # noqa: BLE001
         print("Test FAILED: Invalid .mrpack file")
         return False
 
@@ -61,7 +59,7 @@ def test_pack(mrpack_path: str) -> bool:
     options["gameDirectory"] = modpack_directory
     command = minecraft_launcher_lib.command.get_minecraft_command(minecraft_launcher_lib.mrpack.get_mrpack_launch_version(temp_mrpack_path), minecraft_directory, options)
     os.makedirs("logs", exist_ok=True)
-    log_timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_timestamp = datetime.datetime.now(datetime.UTC).strftime("%Y%m%d_%H%M%S")
     log_file_path = f"logs/minecraft_output_{log_timestamp}.log"
     print("Running...")
     SUCCESS_TEXT = ["Game took", "gui.png-atlas"]
@@ -87,8 +85,8 @@ def test_pack(mrpack_path: str) -> bool:
                         break
                     if minecraft_process.poll() is not None:
                         break
-        except Exception:
-            pass
+        except Exception as e:  # noqa: BLE001
+            print(f"Exception occurred while running Minecraft: {e}")
         if minecraft_process.poll() is None:
             if timeout_reached:
                 minecraft_process.kill()
@@ -105,7 +103,7 @@ def test_pack(mrpack_path: str) -> bool:
         print("\033[1;32mPASSED")
     else:
         print("\033[1;31mFAILED")
-        subprocess.run(["tail", "-n", "20", log_file_path])
+        subprocess.run(["tail", "-n", "20", log_file_path], check=False)
         print(f"Full log available at: {log_file_path}")
     print("\033[0m")
     # Cleanup after run

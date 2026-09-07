@@ -1,6 +1,7 @@
 import os
-from config import root
 import subprocess
+
+from config import root
 
 
 def bulk_run(editions: list[tuple[str, list[str]]]) -> None:

@@ -1,8 +1,8 @@
 import os
+import shutil
 import subprocess
 
-from config import modpack_name, root, pakku, get_latest_version
-import shutil
+from config import get_latest_version, modpack_name, pakku, root
 
 
 def get_release_number(old_release_number: str, easy_input: bool) -> str:

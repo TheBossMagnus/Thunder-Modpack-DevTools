@@ -10,6 +10,7 @@ supp_editions = {
     "1.21.11": ["fabric"],
     "26.1.2": ["fabric"],
     "26.2": ["fabric"],
+    "26.3": ["fabric"],
 }
 
 pakku = "pakku"

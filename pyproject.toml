@@ -3,10 +3,10 @@ name = "modpack-devtools"
 version = "0.1.0"
 description = "Dev tools used to maintain Thunder modpack"
 readme = "README.md"
+requires-python = ">=3.14"
 dependencies = [
-    "click>=8.1.0",
     "minecraft-launcher-lib>=6.0.0",
-    "requests>=2.31.0",
+    "modpack-changelogger>=1.0.0",
 ]
 
 [project.scripts]
